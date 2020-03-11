@@ -25,11 +25,19 @@ We encourage the use of any libraries for everything except the search functiona
 
 Once you've completed the technical requirements, submit the code to us somehow! Be original!
 
-## MODEL
+## Research and Design
+
+Ruby on Rails API application
+- Database - postgres
+- Jobs - sidekiq
+- Heading parser - nokogiri
+- HTTP client - httparty
+- Testing - rspec
+
+## Models
 
 ```
 member
-- id (integer)
 - name (text)
 - long_url (text)
 - short_url (text)
@@ -37,17 +45,15 @@ member
 - friends (friend array)
 
 friend
-- id (integer)
 - member_id (integer)
 - short_url (text)
 
 heading
-- id (integer)
 - member_id (integer)
 - title (text)
 ```
 
-## API
+## API Endpoints
 
 ```
 HTTP request
@@ -62,14 +68,7 @@ Request body
 
 Response body
 {
-  "status": "ok",
-  "member": {
-    "name": string,
-    "long_url": string,
-    "short_url": string,
-    "headings": [string],
-    "friends": [string]
-  }
+  "status": "ok"
 }
 ```
 
@@ -109,7 +108,7 @@ Response body
 }
 ```
 
-## JOB
+## Jobs
 
 After a `member` is created pass `member.id` to async job that:
 - looks up `member` using `id`
@@ -117,7 +116,6 @@ After a `member` is created pass `member.id` to async job that:
   - save `shortLink` to  `member.short_url`
 - use `nokogiri` to extract all the heading (h1-h3) values from the members website
   - save extracted headings to `member.headings`
-
 
 Note: `To refocus our efforts, we're turning down support for goo.gl over the coming weeks and replacing it with Firebase Dynamic Links (FDL).` https://firebase.google.com/docs/reference/dynamic-links/link-shortener
 

@@ -33,8 +33,17 @@ member
 - name (text)
 - long_url (text)
 - short_url (text)
-- headings (text array)
-- friends (text array)
+- headings (heading array)
+- friends (friend array)
+
+friend
+- id (integer)
+- member_id (integer)
+
+heading
+- id (integer)
+- member_id (integer)
+- title (text)
 ```
 
 ## API

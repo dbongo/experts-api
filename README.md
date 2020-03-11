@@ -39,6 +39,7 @@ member
 friend
 - id (integer)
 - member_id (integer)
+- short_url (text)
 
 heading
 - id (integer)
@@ -104,6 +105,32 @@ Response body
     "short_url": string,
     "headings": [string],
     "friends": [string]
+  }
+}
+```
+
+## JOB
+
+After a `member` is created pass `member.id` to async job that:
+- looks up `member` using `id`
+- use `httparty` client to request a `shortLink` from  Firebase Dynamic Links API
+  - save `shortLink` to  `member.short_url`
+- use `nokogiri` to extract all the heading (h1-h3) values from the members website
+  - save extracted headings to `member.headings`
+
+
+Note: `To refocus our efforts, we're turning down support for goo.gl over the coming weeks and replacing it with Firebase Dynamic Links (FDL).` https://firebase.google.com/docs/reference/dynamic-links/link-shortener
+
+```
+HTTP request
+POST https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=api_key
+Content-Type: application/json
+
+Request body
+{
+  "longDynamicLink": string,
+  "suffix": {
+    "option": "SHORT" or "UNGUESSABLE"
   }
 }
 ```

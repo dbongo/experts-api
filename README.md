@@ -36,19 +36,35 @@ Ruby on Rails API application
 
 ## Models
 
+### Inverse Relationships
+
+http://railscasts.com/episodes/163-self-referential-association?view=asciicast
+
+`When creating self-referential relationships it’s important to remember that we’re only creating one side of the relationship. Although eifion has paul listed as a friend above, if we were to visit paul’s profile we wouldn’t see eifion listed unless paul had chosen to add him. We need two Friendship records to create a mutual friendship.`
+
+`It’s difficult to think up appropriate names to define the other side of the relationship so we’ll prefix both with the word “inverse” to give us inverse_friendships and inverse_friends. We need to specify some additional options to make the relationships work. For inverse_friendships we’ll have to specify the name of the other model as it can’t be inferred from the relationship name and we’ll also have to define the foreign key as friend_id. For the inverse_friends relationship we need to specify the source as users, as again it cannot be inferred from the name of the relationship.`
+
+```ruby
+class Member < ActiveRecord::Base
+  has_many :friendships
+  has_many :friends, :through => :friendships
+
+  has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+  has_many :inverse_friends, :through => :inverse_friendships, :source => :user
+end
+```
+
+### Tables
+
 ```
 member
-- name (attribute) (text)
-- long_url (attribute) (text)
-- short_url (attribute) (text)
-- friendships (association) (friendship array)
-- friends (association) (member array)
-- inverse_friendships (association) (friendship array)
-- inverse_friends (association) (member array)
+- name (text)
+- long_url (text)
+- short_url (text)
 
 friendship
-- member_id (attribute) (integer)
-- friend_id (attribute) (integer)
+- member_id (integer)
+- friend_id (integer)
 
 heading
 - member_id (integer)

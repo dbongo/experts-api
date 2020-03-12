@@ -10,24 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_11_184532) do
+ActiveRecord::Schema.define(version: 2020_03_12_130808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "friends", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "member_id", null: false
-    t.index ["member_id"], name: "index_friends_on_member_id"
-  end
-
-  create_table "headings", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "member_id", null: false
-    t.text "title"
-    t.index ["member_id"], name: "index_headings_on_member_id"
+  create_table "friendships", force: :cascade do |t|
+    t.integer "member_id"
+    t.integer "friend_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -38,6 +28,4 @@ ActiveRecord::Schema.define(version: 2020_03_11_184532) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "friends", "members"
-  add_foreign_key "headings", "members"
 end

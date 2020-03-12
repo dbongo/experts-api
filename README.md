@@ -38,15 +38,17 @@ Ruby on Rails API application
 
 ```
 member
-- name (text)
-- long_url (text)
-- short_url (text)
-- headings (heading array)
-- friends (friend array)
+- name (attribute) (text)
+- long_url (attribute) (text)
+- short_url (attribute) (text)
+- friendships (association) (friendship array)
+- friends (association) (member array)
+- inverse_friendships (association) (friendship array)
+- inverse_friends (association) (member array)
 
-friend
-- member_id (integer)
-- short_url (text)
+friendship
+- member_id (attribute) (integer)
+- friend_id (attribute) (integer)
 
 heading
 - member_id (integer)
